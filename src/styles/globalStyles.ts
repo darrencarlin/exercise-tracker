@@ -33,7 +33,7 @@ body {
     position: relative;
     max-width: 450px;
     margin: 25px auto;
-    max-height: 1000px
+    max-height: 1000px;
     min-height: 800px;
   }
 }
