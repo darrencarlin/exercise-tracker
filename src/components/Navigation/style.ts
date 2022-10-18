@@ -21,7 +21,7 @@ export const SlideOutNav = styled.div<SlideOutNavProps>`
 
   @media screen and (min-width: 500px) {
     max-width: 450px;
-    max-height: 800px;
+    max-height: 1000px;
   }
   h3 {
     padding: 1.25rem 1.25rem 0 1.25rem;

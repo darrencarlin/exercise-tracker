@@ -25,7 +25,7 @@ export const Screen = styled.div`
   }
   @media screen and (min-width: 500px) {
     max-width: 450px;
-    max-height: 800px;
+    max-height: 1000px;
   }
 
   footer {
