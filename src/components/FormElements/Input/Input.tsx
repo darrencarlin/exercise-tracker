@@ -1,6 +1,7 @@
+import { InputHTMLAttributes } from "react";
 import { StyledInput } from "./style";
 
-interface InputProps {
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   value: string;
   placeholder: string;
   // eslint-disable-next-line no-unused-vars

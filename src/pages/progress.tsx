@@ -17,6 +17,7 @@ import {
   getTotalSets,
   getTotalWeight,
   getWeightEquivalent,
+  convertLbsToTonnes,
 } from "util/index";
 import { useAppDispatch, useAppSelector } from "../redux/hooks/redux";
 import { setLoading } from "../redux/slices/app";
@@ -91,7 +92,7 @@ const Progress = () => {
 
           <li>
             <b>Total weight lifted:</b> {totalWeight}lbs (
-            {convertLbsToKg(totalWeight)}kg)
+            {convertLbsToTonnes(totalWeight)}tonnes)
           </li>
 
           {totalWeight > 0 && weightComparisonText && (
@@ -102,8 +103,7 @@ const Progress = () => {
             <b>Most performed exercise: </b>{" "}
             {mostPerformedExercise.name ? (
               <>
-                {mostPerformedExercise.name} ({mostPerformedExercise.count}{" "}
-                times)
+                {mostPerformedExercise.name} ({mostPerformedExercise.count} times)
               </>
             ) : (
               "None"
@@ -121,8 +121,8 @@ const Progress = () => {
             {heaviestLift.weight > 0 ? (
               <>
                 {heaviestLift.weight}lbs (
-                {convertLbsToKg(Number(heaviestLift.weight))}kg) (
-                {heaviestLift.name})
+                {convertLbsToKg(Number(heaviestLift.weight))}kg) ({heaviestLift.name}
+                )
               </>
             ) : (
               "None"

@@ -116,14 +116,14 @@ const Workout = () => {
         <Form>
           <Input
             type="number"
-inputProps={{ inputMode: 'numeric' }}
+            inputMode="numeric"
             placeholder="Weight (lbs)"
             value={weight}
             onChange={(e) => setWeight(e.target.value)}
           />
           <Input
             type="number"
-inputProps={{ inputMode: 'numeric' }}
+            inputMode="numeric"
             placeholder="Reps"
             value={reps}
             onChange={(e) => setReps(e.target.value)}

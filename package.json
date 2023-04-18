@@ -21,6 +21,7 @@
     "react-redux": "^8.0.4",
     "react-reveal": "^1.2.2",
     "react-transition-group": "^4.4.5",
+    "recharts": "^2.1.15",
     "sass": "^1.54.9",
     "styled-components": "^5.3.5",
     "use-long-press": "^2.0.2"

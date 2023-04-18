@@ -30,7 +30,7 @@ const Exercise = () => {
         </Group>
         <Group>
           <ScreenTitle title={activeExercise.name} />
-          <ProgressIcon />
+          <ProgressIcon href="/progress/detail" />
         </Group>
         <Text m="0 0 10px 0">
           You have completed this exercise <b>{totalWorkouts}</b> times and your

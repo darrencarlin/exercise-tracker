@@ -2,9 +2,13 @@ import Link from "next/link";
 import { AiOutlineLineChart } from "react-icons/ai";
 import { StyledAvatar } from "./style";
 
-const ProgressIcon = () => {
+interface ProgressIconProps {
+  href?: string;
+}
+
+const ProgressIcon = ({ href }: ProgressIconProps) => {
   return (
-    <Link href="/progress">
+    <Link href={href ? href : "/progress"}>
       <StyledAvatar>
         <AiOutlineLineChart />
       </StyledAvatar>

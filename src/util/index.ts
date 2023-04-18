@@ -36,10 +36,13 @@ export const convertLbsToKg = (lbs: number) => {
   return (lbs / 2.2046).toFixed(0);
 };
 
+export const convertLbsToTonnes = (lbs: number) => {
+  return (lbs / 2204.6).toFixed(2);
+};
+
 // function to create 20 character random string of numbers, letters (both lower and upper case)
 export const generateRandomFirebaseStyleId = () => {
-  const possible =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let id = "";
   for (let i = 0; i < 20; i++) {
     id += possible.charAt(Math.floor(Math.random() * possible.length));
