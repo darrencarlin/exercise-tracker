@@ -59,3 +59,12 @@ export const Input = styled.input`
   font-size: 1rem;
   margin: 0 0 10px 0;
 `;
+
+export const TitleGroup = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 10px 0;
+`;

@@ -5,7 +5,13 @@ import ScreenTitle from "components/ScreenTitle/ScreenTitle";
 import Text from "components/Text/Text";
 import WorkoutList from "components/Lists/WorkoutList/WorkoutList";
 import { useAppSelector } from "../redux/hooks/redux";
-import { Controls, Main, Navigation, Screen } from "styles/pages/exercise";
+import {
+  Controls,
+  Main,
+  Navigation,
+  Screen,
+  TitleGroup,
+} from "styles/pages/exercise";
 import { getMaxWeightFromWorkouts } from "util/index";
 import ProgressIcon from "components/ProgressIcon/ProgressIcon";
 import { Group } from "styles/shared";
@@ -28,14 +34,13 @@ const Exercise = () => {
           <BackButton />
           <Avatar />
         </Group>
-        <Group>
+        <TitleGroup>
           <ScreenTitle title={activeExercise.name} />
           <ProgressIcon href="/progress/detail" />
-        </Group>
+        </TitleGroup>
         <Text m="0 0 10px 0">
           You have completed this exercise <b>{totalWorkouts}</b> times and your
-          current max weight is{" "}
-          <b>{maxWeight == -Infinity ? 0 : maxWeight}lbs</b>.
+          current max weight is <b>{maxWeight == -Infinity ? 0 : maxWeight}lbs</b>.
         </Text>
       </Navigation>
       <Main>

@@ -59,17 +59,16 @@ const WorkoutList = () => {
               <BiCalendar color={theme.colors.blue} />{" "}
               {format(new Date(date), "EEE do MMM, yyyy")}
             </WorkoutDate>
-
-            <Sets>
-              <BiRepeat color={theme.colors.blue} />
-              {sets.length} ({sets.map((set: Set) => set.reps).join("x")})
-            </Sets>
-
             <MaxWeight>
               <BiDumbbell color={theme.colors.blue} />
               {maxWeight}lbs ({convertLbsToKg(maxWeight)}
               kg)
             </MaxWeight>
+            <Sets>
+              <BiRepeat color={theme.colors.blue} />
+              {sets.length}{" "}
+              {sets.map((set: Set) => `(${set.reps}x${set.weight}lbs) `)}
+            </Sets>
           </ListItem>
         );
       })}
