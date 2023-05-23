@@ -42,7 +42,8 @@ export const convertLbsToTonnes = (lbs: number) => {
 
 // function to create 20 character random string of numbers, letters (both lower and upper case)
 export const generateRandomFirebaseStyleId = () => {
-  const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let id = "";
   for (let i = 0; i < 20; i++) {
     id += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -50,12 +51,28 @@ export const generateRandomFirebaseStyleId = () => {
   return id;
 };
 
-export const getMaxWeightFromWorkouts = (workouts: Workout[]) =>
-  Math.max(
-    ...workouts.map((workout: Workout) =>
-      Math.max(...workout.sets.map((set) => Number(set.weight) ?? 0))
-    )
+export const getMaxWeightFromWorkouts = (workouts: Workout[]) => {
+  const maxWeightsPerWorkout = workouts.map((workout) =>
+    Math.max(...workout.sets.map((set) => Number(set.weight) ?? 0))
   );
+
+  return Math.max(...maxWeightsPerWorkout);
+};
+
+export const getAverageFromWorkouts = (workouts: Workout[]) => {
+  let totalWeight = 0;
+  let totalCount = 0;
+
+  workouts.forEach((workout) => {
+    workout.sets.forEach((s) => {
+      totalWeight += s.weight;
+      totalCount++;
+    });
+  });
+
+  const average = totalCount ? totalWeight / totalCount : 0;
+  return average.toFixed(0);
+};
 
 export const getTotalSets = (workouts: Workout[]) => {
   let totalSets = 0;
@@ -70,7 +87,7 @@ export const getTotalSets = (workouts: Workout[]) => {
 export const getTotalReps = (workouts: Workout[]) => {
   let totalReps = 0;
   workouts.forEach((workout: Workout) => {
-    workout.sets.map(({ reps }: Set) => {
+    workout.sets.forEach(({ reps }: Set) => {
       totalReps += Number(reps) ?? 0;
     });
   });
@@ -80,7 +97,7 @@ export const getTotalReps = (workouts: Workout[]) => {
 export const getTotalWeight = (workouts: Workout[]) => {
   let totalWeight = 0;
   workouts.forEach((workout: Workout) => {
-    workout.sets.map(({ weight }: Set) => {
+    workout.sets.forEach(({ weight }: Set) => {
       totalWeight += Number(weight) ?? 0;
     });
   });
@@ -94,7 +111,7 @@ export const getHeaviestLift = (workouts: Workout[]): HeaviestLift => {
   };
 
   workouts.forEach((workout: Workout) => {
-    workout.sets.map(({ weight }: Set) => {
+    workout.sets.forEach(({ weight }: Set) => {
       if (weight > heaviestLift.weight) {
         heaviestLift.name = workout.exercise.name;
         heaviestLift.weight = weight;
@@ -108,21 +125,32 @@ export const getHeaviestLift = (workouts: Workout[]): HeaviestLift => {
 export const getMaxWeightFromSets = (sets: Set[]) =>
   Math.max(...sets.map((set: Set) => set.weight));
 
-export const getWeightEquivalent = (weight: number) => {
-  if (weight >= 3750 && weight < 4000) {
-    return "a Hippopotamus";
-  }
-  if (weight >= 8000 && weight < 8500) {
-    return "a Blue whale’s Tongue";
-  }
-  if (weight >= 11000 && weight < 15500) {
-    return "a Tyrannosaurus Rex";
-  }
-  if (weight >= 16000 && weight < 20000) {
-    return "40-50 Megabytes of data in 1965";
-  }
+const weightEquivalents = [
+  { min: 20, max: 25, equivalent: "a car tire" },
+  { min: 70, max: 80, equivalent: "a golden retriever" },
+  { min: 100, max: 150, equivalent: "a newborn elephant" },
+  { min: 150, max: 200, equivalent: "an adult human" },
+  { min: 800, max: 1000, equivalent: "a grand piano" },
+  { min: 1200, max: 1300, equivalent: "a horse" },
+  { min: 2500, max: 3000, equivalent: "a small car" },
+  { min: 3750, max: 4000, equivalent: "a Hippopotamus" },
+  { min: 5000, max: 6000, equivalent: "a large SUV" },
+  { min: 8000, max: 8500, equivalent: "a Blue whale’s Tongue" },
+  { min: 11000, max: 15500, equivalent: "a Tyrannosaurus Rex 🦖" },
+  { min: 16000, max: 20000, equivalent: "40-50 Megabytes of data in 1965 💾" },
+  { min: 30000, max: 35000, equivalent: "an adult blue whale 🐋" },
+  { min: 40000, max: 45000, equivalent: "a city bus 🚌" },
+  { min: 60000, max: 65000, equivalent: "a tank 🪖" },
+  { min: 70000, max: 75000, equivalent: "a space shuttle 🚀" },
+  { min: 7000000, max: 8000000, equivalent: "the Eiffel Tower 🗼" },
+  { min: 580000000, max: 600000000, equivalent: "the Great Pyramid of Giza" },
+];
 
-  return "";
+export const getWeightEquivalent = (weight: number) => {
+  const equivalent = weightEquivalents.find(
+    ({ min, max }) => weight >= min && weight < max
+  );
+  return equivalent ? equivalent.equivalent : "";
 };
 
 export const getMostPerformedExercise = (

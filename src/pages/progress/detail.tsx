@@ -27,23 +27,13 @@ const ExerciseDetailed = () => {
 
   const theme = useTheme();
 
-  console.log(workouts);
-
   const data = workouts
-    .map((workout) => {
-      return {
-        date: workout.date,
-        dateDisplay: format(new Date(workout.date), "M/dd"),
-        weight: getMaxWeightFromSets(workout.sets),
-      };
-    })
-    .sort((a, b) => {
-      const x = new Date(a.date);
-      const y = new Date(b.date);
-      return x < y ? -1 : x > y ? 1 : 0;
-    });
-
-  console.log(data);
+    .map((workout) => ({
+      date: workout.date,
+      dateDisplay: format(new Date(workout.date), "M/dd"),
+      weight: getMaxWeightFromSets(workout.sets || []),
+    }))
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
   return (
     <Screen>

@@ -24,7 +24,7 @@ export interface Category {
 
 export interface User {
   email: string;
-  isSubscribed: boolean;
+  subscribedTo: boolean;
   name: string;
   image: string;
   workouts: Workout[];

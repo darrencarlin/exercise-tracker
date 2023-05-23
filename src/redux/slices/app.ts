@@ -18,7 +18,7 @@ interface AppState {
 export const initialState: AppState = {
   user: {
     email: "",
-    isSubscribed: false,
+    subscribedTo: false,
     image: "",
     name: "",
     workouts: [],
@@ -56,7 +56,7 @@ export const getData = createAsyncThunk(
         user: {
           email: email,
           image: image,
-          isSubscribed: false,
+          subscribedTo: false,
           name: name,
           workouts: [],
           exercises: [],
@@ -131,7 +131,6 @@ export const appSlice = createSlice({
       // if it was, set addedAllExamples to false
 
       if (exampleExercises.find((exercise) => exercise.id === payload)) {
-        console.log("found example exercise");
         state.addedAllExamples = false;
       }
 

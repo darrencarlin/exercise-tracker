@@ -58,7 +58,12 @@ const Progress = () => {
     setMostPerformedExercise(getMostPerformedExercise(state.user.workouts));
     setFavouriteDay(getFavouriteDay(state.user.workouts));
     dispatch(setLoading(false));
-  }, []);
+  }, [
+    dispatch,
+    state.user.categories.length,
+    state.user.exercises.length,
+    state.user.workouts,
+  ]);
 
   const weightComparisonText = getWeightEquivalent(totalWeight);
 
@@ -103,7 +108,8 @@ const Progress = () => {
             <b>Most performed exercise: </b>{" "}
             {mostPerformedExercise.name ? (
               <>
-                {mostPerformedExercise.name} ({mostPerformedExercise.count} times)
+                {mostPerformedExercise.name} ({mostPerformedExercise.count}{" "}
+                times)
               </>
             ) : (
               "None"
@@ -121,8 +127,8 @@ const Progress = () => {
             {heaviestLift.weight > 0 ? (
               <>
                 {heaviestLift.weight}lbs (
-                {convertLbsToKg(Number(heaviestLift.weight))}kg) ({heaviestLift.name}
-                )
+                {convertLbsToKg(Number(heaviestLift.weight))}kg) (
+                {heaviestLift.name})
               </>
             ) : (
               "None"

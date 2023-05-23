@@ -2,21 +2,27 @@ import BackButton from "components/BackButton/BackButton";
 import Divider from "components/Divider/Divider";
 import ScreenTitle from "components/ScreenTitle/ScreenTitle";
 import Text from "components/Text/Text";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { DeleteButton } from "styles/pages/add";
 import Button from "components/FormElements/Button/Button";
 import { Controls, Main, Navigation, Screen } from "styles/pages/profile";
 import { DELETE_USER_TEXT } from "util/constants";
-import { deleteAccoutFromFirebase } from "util/firebase/firebase";
+import {
+  checkIfUserIsSubscribedToAnotherUser,
+  deleteAccoutFromFirebase,
+} from "util/firebase/firebase";
 import { isBrowser } from "util/index";
 import { useAppDispatch, useAppSelector } from "../redux/hooks/redux";
-import { logout, setLoading } from "../redux/slices/app";
+import { getData, logout, setLoading } from "../redux/slices/app";
 import Avatar from "components/Avatar/Avatar";
 import { Group } from "styles/shared";
+import { useEffect, useState } from "react";
 
 const Profile = () => {
+  const [isSubscribed, setIsSubscribed] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.app);
 
@@ -37,6 +43,37 @@ const Profile = () => {
     dispatch(logout());
     isBrowser && router.push("/login");
   };
+
+  const refreshSubscribedData = () => {
+    if (
+      !session?.user?.email ||
+      !session?.user?.name ||
+      !session?.user?.image
+    ) {
+      return;
+    }
+
+    dispatch(
+      getData({
+        email: session?.user?.email,
+        name: session?.user?.name,
+        image: session?.user?.image,
+      })
+    );
+  };
+
+  useEffect(() => {
+    const checkIfSubscribed = async () => {
+      if (!session?.user?.email) return;
+      const isSubscribed = await checkIfUserIsSubscribedToAnotherUser(
+        session?.user?.email
+      );
+
+      console.log("isSubscribed", isSubscribed);
+      setIsSubscribed(isSubscribed);
+    };
+    checkIfSubscribed();
+  }, [session?.user?.email]);
 
   return (
     <Screen>
@@ -67,6 +104,17 @@ const Profile = () => {
           right corner of this screen.
         </Text>
         <Divider />
+        {isSubscribed && (
+          <>
+            <Text>
+              You are subscribed to another user. You can refresh your data
+              below. This will update your exercises to match the other user.
+            </Text>
+            <Button type="button" onClick={() => refreshSubscribedData()}>
+              Refresh Subscribed Data
+            </Button>
+          </>
+        )}
       </Main>
 
       <Controls>

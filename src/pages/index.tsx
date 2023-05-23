@@ -16,7 +16,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   );
 
   if (!session) {
-    console.log("no session");
     return {
       redirect: {
         destination: "/login",

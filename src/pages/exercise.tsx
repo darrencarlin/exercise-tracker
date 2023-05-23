@@ -12,7 +12,7 @@ import {
   Screen,
   TitleGroup,
 } from "styles/pages/exercise";
-import { getMaxWeightFromWorkouts } from "util/index";
+import { getAverageFromWorkouts, getMaxWeightFromWorkouts } from "util/index";
 import ProgressIcon from "components/ProgressIcon/ProgressIcon";
 import { Group } from "styles/shared";
 
@@ -25,6 +25,7 @@ const Exercise = () => {
   );
 
   const totalWorkouts = workouts.length;
+  const average = getAverageFromWorkouts(workouts);
   const maxWeight = getMaxWeightFromWorkouts(workouts);
 
   return (
@@ -40,7 +41,8 @@ const Exercise = () => {
         </TitleGroup>
         <Text m="0 0 10px 0">
           You have completed this exercise <b>{totalWorkouts}</b> times and your
-          current max weight is <b>{maxWeight == -Infinity ? 0 : maxWeight}lbs</b>.
+          current max is <b>{maxWeight == -Infinity ? 0 : maxWeight}lbs</b> and
+          your average is <b>{average}lbs</b>.
         </Text>
       </Navigation>
       <Main>

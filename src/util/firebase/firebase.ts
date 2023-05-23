@@ -11,7 +11,7 @@ import {
   updateDoc,
   where,
 } from "firebase/firestore";
-import { Category, Exercise, Workout } from "../../types/index";
+import { Category, Exercise, User, Workout } from "../../types/index";
 import { db } from "./firebaseClient";
 
 export const getInitialData = async (email: string) => {
@@ -85,7 +85,7 @@ export const getInitialData = async (email: string) => {
       email,
       name,
       image,
-      isSubscribed: Boolean(subscribedTo),
+      subscribedTo: Boolean(subscribedTo),
       workouts: workoutsData,
       categories: categoriesData,
       exercises: exercisesData.sort((a: Exercise, b: Exercise) => {
@@ -249,173 +249,13 @@ export const deleteCategoryFromFirebase = async (
   await deleteDoc(doc(categoryRef, categroryID));
 };
 
-// export const updateStringsInFirebase = async () => {
-//   const users = collection(db, "users");
-//   const usersQuerySnapshot = await getDocs(users);
-//   usersQuerySnapshot.docs.map((doc) => {
-//     const workouts = collection(doc.ref, "workouts");
-//     const workoutsQuerySnapshot = getDocs(workouts);
-//     workoutsQuerySnapshot.then((workoutsQuerySnapshot) => {
-//       workoutsQuerySnapshot.docs.map((doc) => {
-//         const data = doc.data();
-//         const sets = data.sets;
-
-//         const newSets = sets.map((set: Set) => {
-//           const newSet = {
-//             id: set.id ?? generateRandomFirebaseStyleId(),
-//             reps: Number(set.reps),
-//             weight: Number(set.weight),
-//           };
-
-//           return newSet;
-//         });
-
-//         updateDoc(doc.ref, {
-//           sets: newSets,
-//         });
-//       });
-//     });
-//   });
-// };
-
-// functions to update firestore data (not app related)
-// export const updateExercises = async () => {
-//   const exercises = collection(db, "exercises");
-
-//   const querySnapshot = await getDocs(exercises);
-
-//   const exercisesData = querySnapshot.docs.map((doc) => {
-//     return {
-//       id: doc.id,
-//       name: doc.data().name,
-//       type: doc.data().type,
-//     } as Exercise;
-//   });
-
-//   const ref = doc(db, `users/8Y5Rxxkeo2tORmCfTFZe`);
-//   await setDoc(
-//     ref,
-//     {
-//       exercises: exercisesData,
-//     },
-//     { merge: true }
-//   );
-// };
-
-// export const updateWorkouts = async () => {
-//   // get user worksouts
-//   const users = collection(db, "users");
-//   const q = query(users, where("email", "==", "calla91591@gmail.com"));
-//   const querySnapshot = await getDocs(q);
-
-//   let newData = querySnapshot.docs.map((doc) => {
-//     return doc.data();
-//   })[0];
-
-//   newData.workouts = newData.workouts.map((workout: Workout) => {
-//     return {
-//       ...workout,
-//       exercise: {
-//         id: workout.exercise.firestoreId,
-//         name: workout.exercise.name,
-//         type: workout.exercise.type,
-//       },
-//     };
-//   });
-
-//   console.log(newData);
-
-//   const ref = doc(db, `users/8Y5Rxxkeo2tORmCfTFZe`);
-//   await setDoc(
-//     ref,
-//     {
-//       workouts: newData.workouts,
-//     },
-//     { merge: true }
-//   );
-// }
-
-// export const subcollectionTest = async () => {
-//   const ref = doc(db, "users", "dazftw@gmail.com");
-//   const docSnap = await getDoc(ref);
-
-//   if (docSnap.exists()) {
-//     // get darrens data
-//     const data = docSnap.data();
-//     const workouts = data.workouts;
-//     const exercises = data.exercises;
-//     const categories = data.categories;
-
-//     // add to new subcollection
-//     const ref = doc(db, "users", "g7o0KqHBP8CvRbDAxlp6");
-//     const workoutsColRef = collection(ref, "workouts");
-//     const exercisesColRef = collection(ref, "exercises");
-//     const categoriesColRef = collection(ref, "categories");
-
-//     workouts.forEach((workout: Workout) => {
-//       addDoc(workoutsColRef, workout);
-//     });
-
-//     exercises.forEach((exercise: Exercise) => {
-//       addDoc(exercisesColRef, exercise);
-//     });
-
-//     categories.forEach((category: Category) => {
-//       addDoc(categoriesColRef, category);
-//     });
-//   }
-// };
-
-// export const subcollectionTest = async () => {
-//   const ref = doc(db, "users", "g7o0KqHBP8CvRbDAxlp6");
-
-//   // get collection workouts
-//   const workoutsColRef = collection(ref, "workouts");
-
-//   const workoutsQuerySnapshot = await getDocs(workoutsColRef);
-
-//   const workoutsData = workoutsQuerySnapshot.docs.map((doc) => {
-//     return {
-//       ...doc.data(),
-//     } as Workout;
-//   });
-
-//   // get collection exercises
-//   const exercisesColRef = collection(ref, "exercises");
-
-//   const exercisesQuerySnapshot = await getDocs(exercisesColRef);
-
-//   const exercisesData = exercisesQuerySnapshot.docs.map((doc) => {
-//     return {
-//       ...doc.data(),
-//     } as Exercise;
-//   });
-
-//   // get collection categories
-//   const categoriesColRef = collection(ref, "categories");
-
-//   const categoriesQuerySnapshot = await getDocs(categoriesColRef);
-
-//   const categoriesData = categoriesQuerySnapshot.docs.map((doc) => {
-//     return {
-//       ...doc.data(),
-//     } as Category;
-//   });
-
-//   const newRef = doc(db, "users", "calla91591@gmail.com");
-//   const newWorkoutsColRef = collection(newRef, "workouts");
-//   const newExercisesColRef = collection(newRef, "exercises");
-//   const newCategoriesColRef = collection(newRef, "categories");
-
-//   workoutsData.forEach((workout: Workout) => {
-//     addDoc(newWorkoutsColRef, workout);
-//   });
-
-//   exercisesData.forEach((exercise: Exercise) => {
-//     addDoc(newExercisesColRef, exercise);
-//   });
-
-//   categoriesData.forEach((category: Category) => {
-//     addDoc(newCategoriesColRef, category);
-//   });
-// };
+export const checkIfUserIsSubscribedToAnotherUser = async (email: string) => {
+  // get a reference to user document
+  const ref = doc(db, "users", email);
+  // get the user document data
+  const docSnap = await getDoc(ref);
+  // get the user document data
+  const data = docSnap.data() as User;
+  // return the isSubscribed value
+  return data.subscribedTo;
+};

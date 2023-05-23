@@ -111,17 +111,12 @@ const AddFromExamples = () => {
       isCategoryAdded(category)
     );
 
-    console.log({ allExexrcisesAdded, allCategoriesAdded });
-
     setAddedAllExercises(allExexrcisesAdded);
     setAddedAllCategories(allCategoriesAdded);
-
-    console.log({ addedAll: allExexrcisesAdded && allCategoriesAdded });
 
     dispatch(setAddedAllExamples(allExexrcisesAdded && allCategoriesAdded));
 
     if (allExexrcisesAdded && allCategoriesAdded) {
-      console.log("all added");
       dispatch(setAddedAllExamples(true));
       updateValueInFirebase(user.email, "addedAllExamples", true);
     }
