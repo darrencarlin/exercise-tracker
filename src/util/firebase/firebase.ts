@@ -15,6 +15,7 @@ import { Category, Exercise, User, Workout } from "../../types/index";
 import { db } from "./firebaseClient";
 
 export const getInitialData = async (email: string) => {
+  console.log('[getInitialData]')
   const initialRef = doc(db, "users", email);
 
   const docSnap = await getDoc(initialRef);

@@ -22,8 +22,10 @@ const UserDataWrapper = ({ children }: UserDataProps) => {
     const localData = getLocalItem("app");
 
     if (localData) {
+      console.log("[UserDataWrapper]: has localStorage data")
       // check if localdata has a value for name
       if (localData.user.name) {
+        console.log("[UserDataWrapper]: has localStorage data and name, using setData")
         dispatch(setData(localData));
       }
 
@@ -33,6 +35,7 @@ const UserDataWrapper = ({ children }: UserDataProps) => {
         session?.user?.name &&
         session?.user?.image
       ) {
+        console.log("[UserDataWrapper]: has localStorage data but no name, getting name from session to getData")
         dispatch(
           getData({
             email: session?.user?.email,
@@ -43,12 +46,14 @@ const UserDataWrapper = ({ children }: UserDataProps) => {
       }
     }
 
+
     // if localdata is null, check if session has a value for name
     else if (
       session?.user?.email &&
       session?.user?.name &&
       session?.user?.image
     ) {
+      console.log("[UserDataWrapper]: localStorage is null, using session to getData")
       dispatch(
         getData({
           email: session?.user?.email,
@@ -57,9 +62,10 @@ const UserDataWrapper = ({ children }: UserDataProps) => {
         })
       );
     }
-
+   
     // if localdata is null and session has no value for name, redirect to login
     else {
+      console.log("[UserDataWrapper]: localStorage is null, no session, redirecting")
       setLocalItem("app", initialState);
       router.push("/login");
     }
