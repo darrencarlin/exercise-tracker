@@ -86,7 +86,7 @@ const WorkoutDetails = () => {
       <Main>
         <WorkoutDate>
           <BiCalendar color={theme.colors.blue} />{" "}
-          {format(new Date(date), "EEE do MMM, yyyy")}
+          {date && format(new Date(date), "EEE do MMM, yyyy")}
         </WorkoutDate>
         <MaxWeight>
           <BiDumbbell color={theme.colors.blue} />
