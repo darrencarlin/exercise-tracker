@@ -1,20 +1,20 @@
 import AppNavigation from "components/AppNavigation/AppNavigation";
 import Avatar from "components/Avatar/Avatar";
 import BackButton from "components/BackButton/BackButton";
+import WorkoutList from "components/Lists/WorkoutList/WorkoutList";
+import ProgressIcon from "components/ProgressIcon/ProgressIcon";
 import ScreenTitle from "components/ScreenTitle/ScreenTitle";
 import Text from "components/Text/Text";
-import WorkoutList from "components/Lists/WorkoutList/WorkoutList";
-import { useAppSelector } from "../redux/hooks/redux";
+import { useAppSelector } from "src/redux/hooks/redux";
 import {
   Controls,
-  Main,
   Navigation,
+  Main,
   Screen,
   TitleGroup,
 } from "styles/pages/exercise";
-import { getAverageFromWorkouts, getMaxWeightFromWorkouts } from "util/index";
-import ProgressIcon from "components/ProgressIcon/ProgressIcon";
 import { Group } from "styles/shared";
+import { getAverageFromWorkouts, getMaxWeightFromWorkouts } from "util/index";
 
 const Exercise = () => {
   const activeExercise = useAppSelector((state) => state.app.activeExercise);

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { Exercise, User } from "../../types/index";
+import { Exercise, User, Workout } from "../../types/index";
 import {
   createAccountInFirebase,
   getInitialData,
@@ -9,6 +9,7 @@ import { exampleExercises } from "util/example-data";
 
 interface AppState {
   activeExercise: Exercise;
+  activeWorkout: Workout;
   user: User;
   addedAllExamples: boolean;
   navOpen: boolean;
@@ -29,6 +30,18 @@ export const initialState: AppState = {
     id: "",
     name: "",
     type: "",
+  },
+  activeWorkout: {
+    id: "",
+    exercise: {
+      firestoreId: "",
+      id: "",
+      name: "",
+      type: "",
+    },
+    sets: [],
+    date: "",
+    notes: "",
   },
   addedAllExamples: false,
   navOpen: false,
@@ -67,6 +80,18 @@ export const getData = createAsyncThunk(
           name: "",
           type: "",
         },
+        activeWorkout: {
+          id: "",
+          exercise: {
+            firestoreId: "",
+            id: "",
+            name: "",
+            type: "",
+          },
+          sets: [],
+          date: "",
+          notes: "",
+        },
         addedAllExamples: false,
         navOpen: false,
         loading: false,
@@ -98,6 +123,7 @@ export const appSlice = createSlice({
       state.loading = true;
       state.user = payload.user;
       state.activeExercise = payload.activeExercise;
+      state.activeWorkout = payload.activeWorkout;
       state.addedAllExamples = payload.addedAllExamples;
       // save to local storage
       setLocalItem("app", state);
@@ -107,12 +133,24 @@ export const appSlice = createSlice({
       state.activeExercise = payload;
       setLocalItem("app", state);
     },
+    setActiveWorkout: (state, { payload }) => {
+      state.activeWorkout = payload;
+      setLocalItem("app", state);
+    },
     addExercise: (state, { payload }) => {
       state.user.exercises.push(payload);
       // save to local storage
       setLocalItem("app", state);
     },
+    saveWorkoutNotes: (state, { payload }) => {
+      state.user.workouts.filter((workout) => {
+        if (workout.id === payload.id) {
+          workout.notes = payload.notes;
+        }
+      });
 
+      setLocalItem("app", state);
+    },
     addCategory: (state, { payload }) => {
       state.user.categories.push(payload);
       // save to local storage
@@ -168,6 +206,7 @@ export const appSlice = createSlice({
         state.user = payload.user;
         state.addedAllExamples = payload.addedAllExamples;
         state.activeExercise = payload.user.exercises?.[0];
+        state.activeWorkout = payload.user.workouts?.[0];
       }
       state.loading = false;
     });
@@ -183,7 +222,9 @@ export const {
   setLoading,
   setData,
   setActiveExercise,
+  setActiveWorkout,
   addExercise,
+  saveWorkoutNotes,
   addCategory,
   removeExercise,
   removeCategory,

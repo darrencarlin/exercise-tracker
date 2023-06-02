@@ -15,7 +15,6 @@ import { Category, Exercise, User, Workout } from "../../types/index";
 import { db } from "./firebaseClient";
 
 export const getInitialData = async (email: string) => {
-  console.log('[getInitialData]')
   const initialRef = doc(db, "users", email);
 
   const docSnap = await getDoc(initialRef);
@@ -160,6 +159,25 @@ export const saveWorkoutToFirebase = async (
 ) => {
   const ref = doc(db, "users", email);
   await addDoc(collection(ref, "workouts"), workout);
+};
+
+export const saveWorkoutNotesToFirebase = async (
+  email: string,
+  workoutId: string,
+  notes: string
+) => {
+  const ref = doc(db, "users", email);
+
+  const q = query(
+    collection(ref, "workouts"),
+    where("id", "==", workoutId),
+    limit(1)
+  );
+  const querySnapshot = await getDocs(q);
+  const workoutRef = querySnapshot.docs[0].ref;
+  await updateDoc(workoutRef, {
+    notes: notes,
+  });
 };
 
 export const saveExerciseToFirebase = async (

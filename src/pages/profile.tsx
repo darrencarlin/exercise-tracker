@@ -69,7 +69,6 @@ const Profile = () => {
         session?.user?.email
       );
 
-      console.log("isSubscribed", isSubscribed);
       setIsSubscribed(isSubscribed);
     };
     checkIfSubscribed();

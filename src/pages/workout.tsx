@@ -66,6 +66,7 @@ const Workout = () => {
       exercise: activeExercise,
       date: new Date().toISOString(),
       sets: sets,
+      notes: "",
     };
 
     const email = user.email;
