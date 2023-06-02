@@ -3,6 +3,6 @@ import { Input } from "styles/mixins";
 
 export const StyledTextArea = styled.textarea`
   ${Input()}
-  min-height: 400px;
+  min-height: 100px;
   resize: vertical;
 `;
