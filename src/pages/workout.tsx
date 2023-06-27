@@ -45,15 +45,50 @@ const Workout = () => {
   const [reps, setReps] = useState("");
   const [sets, setSets] = useState<Set[]>([]);
 
+  const calculateNewWeight = (start: string, operator: string, end: string) => {
+    switch (operator) {
+      case "+":
+        console.log("adding");
+        return Number(start) + Number(end);
+      case "-":
+        console.log("subtracting");
+        return Number(start) - Number(end);
+      default:
+        alert("Invalid operator. Please use + or -");
+        return null;
+    }
+  };
+
   const addSet = () => {
+    let newWeight: number | null = Number(weight);
+
+    const trimmed = weight.replace(/\s/g, "");
+
+    const mathSplit = trimmed.split(/([+-/*])/);
+
+    if (mathSplit.length === 3) {
+      const start = mathSplit[0];
+      const operator = mathSplit[1];
+      const end = mathSplit[2];
+
+      newWeight = calculateNewWeight(start, operator, end);
+
+      if (newWeight === null) return;
+
+      setWeight(newWeight.toString());
+    }
+
     const newSet = {
       id: generateRandomFirebaseStyleId(),
-      weight: Number(weight),
+      weight: newWeight,
       reps: Number(reps),
     };
 
-    setSets([...sets, newSet]);
-    setLocalItem("sets", [...sets, newSet]);
+    const newSets = [...sets, newSet];
+
+    setSets(newSets);
+    setLocalItem("sets", newSets);
+
     // scroll back to top
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
@@ -116,7 +151,7 @@ const Workout = () => {
       <Main>
         <Form>
           <Input
-            type="number"
+            type="text"
             inputMode="numeric"
             placeholder="Weight (lbs)"
             value={weight}
