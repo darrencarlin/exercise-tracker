@@ -15,7 +15,7 @@ import {
   TitleGroup,
 } from "styles/pages/exercise";
 import { Group } from "styles/shared";
-import { getAverageFromWorkouts, getMaxWeightFromWorkouts } from "util/index";
+import { getAverageFromWorkouts, getMaxLift } from "util/index";
 
 const Exercise = () => {
   const activeExercise = useAppSelector((state) => state.app.activeExercise);
@@ -27,10 +27,7 @@ const Exercise = () => {
 
   const totalWorkouts = workouts.length;
   const average = useMemo(() => getAverageFromWorkouts(workouts), [workouts]);
-  const maxWeight = useMemo(
-    () => getMaxWeightFromWorkouts(workouts),
-    [workouts]
-  );
+  const maxLift = useMemo(() => getMaxLift(workouts), [workouts]);
 
   return (
     <Screen>
@@ -45,8 +42,13 @@ const Exercise = () => {
         </TitleGroup>
         <Text m="0 0 10px 0">
           You have completed this exercise <b>{totalWorkouts}</b> times and your
-          current max is <b>{maxWeight == -Infinity ? 0 : maxWeight}lbs</b> and
-          your average is <b>{average}lbs</b>.
+          current max is (
+          <b>
+            {maxLift?.reps} x{" "}
+            {maxLift.weight == -Infinity ? 0 : maxLift?.weight}
+            lbs
+          </b>
+          ) and your average is <b>{average}lbs</b>.
         </Text>
       </Navigation>
       <Main>

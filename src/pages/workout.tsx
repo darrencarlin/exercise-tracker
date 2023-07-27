@@ -48,10 +48,8 @@ const Workout = () => {
   const calculateNewWeight = (start: string, operator: string, end: string) => {
     switch (operator) {
       case "+":
-        console.log("adding");
         return Number(start) + Number(end);
       case "-":
-        console.log("subtracting");
         return Number(start) - Number(end);
       default:
         alert("Invalid operator. Please use + or -");

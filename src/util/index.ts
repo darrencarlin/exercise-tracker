@@ -51,12 +51,25 @@ export const generateRandomFirebaseStyleId = () => {
   return id;
 };
 
-export const getMaxWeightFromWorkouts = (workouts: Workout[]) => {
-  const maxWeightsPerWorkout = workouts.map((workout) =>
-    Math.max(...workout.sets.map((set) => Number(set.weight) ?? 0))
-  );
+export const getMaxLift = (workouts: Workout[]) => {
+  let maxWeight = 0;
+  let maxSet: Set = {
+    id: "",
+    reps: 0,
+    weight: 0,
+  };
 
-  return Math.max(...maxWeightsPerWorkout);
+  workouts.forEach((workout) => {
+    workout.sets.forEach((set) => {
+      const weight = Number(set.weight);
+      if (weight > maxWeight) {
+        maxWeight = weight;
+        maxSet = set;
+      }
+    });
+  });
+
+  return maxSet;
 };
 
 export const getAverageFromWorkouts = (workouts: Workout[]) => {
