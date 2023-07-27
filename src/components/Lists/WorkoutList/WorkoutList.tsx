@@ -8,6 +8,7 @@ import { Set, Workout } from "../../../types";
 import { List, ListItem, MaxWeight, Sets, WorkoutDate } from "./style";
 import { setActiveWorkout } from "src/redux/slices/app";
 import { useRouter } from "next/router";
+import { useMemo } from "react";
 
 const WorkoutList = () => {
   const router = useRouter();
@@ -20,12 +21,13 @@ const WorkoutList = () => {
   );
 
   const theme = useTheme();
-
   const hasNoWorkouts = workouts.length === 0;
+
+  const sortedWorkouts = useMemo(() => sortByDate(workouts), [workouts]);
 
   return (
     <List>
-      {sortByDate(workouts).map(({ id, date, sets }: Workout, index) => {
+      {sortedWorkouts.map(({ id, date, sets }: Workout, index) => {
         const maxWeight = getMaxWeightFromSets(sets);
 
         return (

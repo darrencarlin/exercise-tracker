@@ -5,6 +5,7 @@ import WorkoutList from "components/Lists/WorkoutList/WorkoutList";
 import ProgressIcon from "components/ProgressIcon/ProgressIcon";
 import ScreenTitle from "components/ScreenTitle/ScreenTitle";
 import Text from "components/Text/Text";
+import { useMemo } from "react";
 import { useAppSelector } from "src/redux/hooks/redux";
 import {
   Controls,
@@ -25,8 +26,11 @@ const Exercise = () => {
   );
 
   const totalWorkouts = workouts.length;
-  const average = getAverageFromWorkouts(workouts);
-  const maxWeight = getMaxWeightFromWorkouts(workouts);
+  const average = useMemo(() => getAverageFromWorkouts(workouts), [workouts]);
+  const maxWeight = useMemo(
+    () => getMaxWeightFromWorkouts(workouts),
+    [workouts]
+  );
 
   return (
     <Screen>
