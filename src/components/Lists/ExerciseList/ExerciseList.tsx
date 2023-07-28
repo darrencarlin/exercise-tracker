@@ -13,7 +13,7 @@ import {
 } from "../../../redux/slices/app";
 import { Exercise } from "../../../types";
 import Text from "../../Text/Text";
-import { List, ListItem, ListTitle } from "./style";
+import { List, ListItem, ListItemNoAction, ListTitle } from "./style";
 
 interface ExerciseListProps {
   searchTerm: string;
@@ -80,13 +80,13 @@ const ExerciseList = ({ searchTerm }: ExerciseListProps) => {
     <List>
       <ListTitle>Most Performed</ListTitle>
       {topFiveExercises.map((exercise) => (
-        <ListItem
+        <ListItemNoAction
           key={exercise.id}
           onClick={() => navigate(exercise)}
           id={exercise.id}
         >
           <p>{exercise.name}</p> <small>({capitalize(exercise.type)})</small>
-        </ListItem>
+        </ListItemNoAction>
       ))}
 
       <ListTitle>All Exercises</ListTitle>

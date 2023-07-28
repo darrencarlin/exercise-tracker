@@ -45,7 +45,7 @@ export const Navigation = styled.nav`
 `;
 
 export const Main = styled.main`
-  padding: 10px 20px 5px 20px;
+  margin: 10px 20px 5px 20px;
 `;
 
 export const Controls = styled.footer`
