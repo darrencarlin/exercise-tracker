@@ -51,6 +51,30 @@ export const generateRandomFirebaseStyleId = () => {
   return id;
 };
 
+export const getTopFiveExercises = (workouts: Workout[]) => {
+  const exercises: MostPerformedExercise[] = [];
+
+  workouts.forEach((workout) => {
+    const exercise = exercises.find(
+      (exercise) => exercise.name === workout.exercise.name
+    );
+    if (exercise) {
+      exercise.count++;
+    } else {
+      exercises.push({
+        id: workout.exercise.id,
+        type: workout.exercise.type,
+        name: workout.exercise.name,
+        count: 1,
+      });
+    }
+  });
+
+  return exercises
+    .sort((a, b) => (a.count < b.count ? 1 : a.count > b.count ? -1 : 0))
+    .slice(0, 5);
+};
+
 export const getMaxLift = (workouts: Workout[]) => {
   let maxWeight = 0;
   let maxSet: Set = {
@@ -187,6 +211,8 @@ export const getMostPerformedExercise = (
   // get the exercise with the highest count
 
   let mostPerformedExercise = {
+    id: "",
+    type: "",
     name: "",
     count: 0,
   };
@@ -195,6 +221,8 @@ export const getMostPerformedExercise = (
     if (mostPerformed[exercise] > mostPerformedExercise.count) {
       mostPerformedExercise.name = exercise;
       mostPerformedExercise.count = mostPerformed[exercise];
+      mostPerformedExercise.type = exercise.split("(")[1].split(")")[0];
+      mostPerformedExercise.id = exercise.split("(")[0].trim();
     }
   }
 

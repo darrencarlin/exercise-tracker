@@ -12,6 +12,20 @@ export const List = styled.ul`
   }
 `;
 
+export const ListTitle = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.25rem;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.borderGray};
+  height: 50px;
+  font-weight: 700;
+  color: ${({ theme }) => theme.colors.blue};
+  p {
+    padding: 0;
+  }
+`;
+
 export const ListItem = styled.li`
   display: flex;
   justify-content: space-between;

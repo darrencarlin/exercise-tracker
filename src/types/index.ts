@@ -73,6 +73,8 @@ export interface HeaviestLift {
 }
 
 export interface MostPerformedExercise {
+  type: string;
+  id: string;
   name: string;
   count: number;
 }

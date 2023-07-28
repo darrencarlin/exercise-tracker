@@ -38,6 +38,8 @@ const Progress = () => {
   });
   const [mostPerformedExercise, setMostPerformedExercise] =
     useState<MostPerformedExercise>({
+      id: "",
+      type: "",
       name: "",
       count: 0,
     });
