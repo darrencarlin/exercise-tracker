@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Screen = styled.div`
   height: 100vh;
@@ -57,7 +57,59 @@ export const Form = styled.form`
 `;
 
 export const Controls = styled.footer`
+  display: grid;
+  grid-template-columns: 1fr 45px;
+  align-items: center;
+  gap: 1rem;
   padding: 16px;
+`;
+
+export const EmojiContainer = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  border: 1px solid ${({ theme }) => theme.colors.borderGray};
+  border-radius: 5px;
+  height: 40px;
+  z-index: 1;
+`;
+
+export const HiddenEmojis = styled.div<{ show: boolean }>`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: absolute;
+  bottom: -1000px;
+  background-color: ${({ theme }) => theme.colors.white};
+  z-index: -1;
+  opacity: 0;
+  ${({ show }) =>
+    show &&
+    css`
+      bottom: 45px;
+      opacity: 1;
+    `};
+  transition: all 0.7s ease-in-out;
+`;
+
+export const EmojiSelector = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  button {
+    appearance: none;
+    border: none;
+    background-color: ${({ theme }) => theme.colors.white};
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+
+  transition: all 0.5s ease-in-out;
 `;
 
 export const Sets = styled.ul`

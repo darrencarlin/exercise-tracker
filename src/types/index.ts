@@ -38,6 +38,7 @@ export interface Workout {
   sets: Set[];
   date: string;
   notes: string;
+  emoji: string;
 }
 
 // string is to empty the input field after a workout is added

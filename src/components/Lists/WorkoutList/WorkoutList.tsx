@@ -1,14 +1,14 @@
 import Text from "components/Text/Text";
 import { format } from "date-fns";
+import { useRouter } from "next/router";
+import { useMemo } from "react";
 import { BiCalendar, BiDumbbell, BiRepeat } from "react-icons/bi";
+import { setActiveWorkout } from "src/redux/slices/app";
 import { useTheme } from "styled-components";
 import { convertLbsToKg, getMaxWeightFromSets, sortByDate } from "util/index";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/redux";
 import { Set, Workout } from "../../../types";
-import { List, ListItem, MaxWeight, Sets, WorkoutDate } from "./style";
-import { setActiveWorkout } from "src/redux/slices/app";
-import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { Emoji, List, ListItem, MaxWeight, Sets, WorkoutDate } from "./style";
 
 const WorkoutList = () => {
   const router = useRouter();
@@ -27,7 +27,7 @@ const WorkoutList = () => {
 
   return (
     <List>
-      {sortedWorkouts.map(({ id, date, sets }: Workout, index) => {
+      {sortedWorkouts.map(({ id, date, sets, emoji }: Workout, index) => {
         const maxWeight = getMaxWeightFromSets(sets);
 
         return (
@@ -39,8 +39,11 @@ const WorkoutList = () => {
             }}
           >
             <WorkoutDate>
-              <BiCalendar color={theme.colors.blue} />{" "}
-              {format(new Date(date), "EEE do MMM, yyyy")}
+              <div>
+                <BiCalendar color={theme.colors.blue} />{" "}
+                {format(new Date(date), "EEE do MMM, yyyy")}
+              </div>
+              <Emoji>{emoji}</Emoji>
             </WorkoutDate>
             <MaxWeight>
               <BiDumbbell color={theme.colors.blue} />

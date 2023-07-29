@@ -21,11 +21,16 @@ export const ListItem = styled.li`
 
 export const WorkoutDate = styled.p`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   font-weight: 400;
   svg {
     margin: 0 5px 0 0;
   }
+`;
+
+export const Emoji = styled.span`
+  font-size: 1.25rem;
 `;
 
 export const Sets = styled.p`

@@ -13,7 +13,10 @@ import { addWorkout, setLoading } from "../redux/slices/app";
 import {
   Controls,
   DeleteButton,
+  EmojiContainer,
+  EmojiSelector,
   Form,
+  HiddenEmojis,
   Main,
   Navigation,
   Screen,
@@ -44,6 +47,8 @@ const Workout = () => {
   const [weight, setWeight] = useState("");
   const [reps, setReps] = useState("");
   const [sets, setSets] = useState<Set[]>([]);
+  const [show, setShow] = useState(false);
+  const [selected, setSelected] = useState("💪🏻");
 
   const calculateNewWeight = (start: string, operator: string, end: string) => {
     switch (operator) {
@@ -100,6 +105,7 @@ const Workout = () => {
       date: new Date().toISOString(),
       sets: sets,
       notes: "",
+      emoji: selected,
     };
 
     const email = user.email;
@@ -195,9 +201,49 @@ const Workout = () => {
       </Main>
       <Controls>
         {sets.length > 0 && (
-          <Button type="button" onClick={addNewWorkout}>
-            Save Workout
-          </Button>
+          <>
+            <Button type="button" onClick={addNewWorkout}>
+              Save Workout
+            </Button>
+
+            <EmojiContainer>
+              <HiddenEmojis show={show}>
+                <EmojiSelector>
+                  <button
+                    onClick={() => {
+                      setSelected("👍🏻");
+                      setShow(false);
+                    }}
+                  >
+                    👍🏻
+                  </button>
+                </EmojiSelector>
+                <EmojiSelector>
+                  <button
+                    onClick={() => {
+                      setSelected("👌🏻");
+                      setShow(false);
+                    }}
+                  >
+                    👌🏻
+                  </button>
+                </EmojiSelector>
+                <EmojiSelector>
+                  <button
+                    onClick={() => {
+                      setSelected("👎🏻");
+                      setShow(false);
+                    }}
+                  >
+                    👎🏻
+                  </button>
+                </EmojiSelector>
+              </HiddenEmojis>
+              <EmojiSelector>
+                <button onClick={() => setShow(!show)}>{selected}</button>
+              </EmojiSelector>
+            </EmojiContainer>
+          </>
         )}
       </Controls>
     </Screen>
