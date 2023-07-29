@@ -42,6 +42,7 @@ export const initialState: AppState = {
     sets: [],
     date: "",
     notes: "",
+    emoji: "",
   },
   addedAllExamples: false,
   navOpen: false,
