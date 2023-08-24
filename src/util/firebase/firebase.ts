@@ -127,7 +127,7 @@ export const createAccountInFirebase = async (
   });
 };
 
-export const deleteAccoutFromFirebase = async (email: string) => {
+export const deleteAccountFromFirebase = async (email: string) => {
   const ref = doc(db, "users", email);
 
   // delete the workouts collection belonging to the user

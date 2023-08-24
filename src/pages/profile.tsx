@@ -10,7 +10,7 @@ import { Controls, Main, Navigation, Screen } from "styles/pages/profile";
 import { DELETE_USER_TEXT } from "util/constants";
 import {
   checkIfUserIsSubscribedToAnotherUser,
-  deleteAccoutFromFirebase,
+  deleteAccountFromFirebase,
 } from "util/firebase/firebase";
 import { isBrowser } from "util/index";
 import { useAppDispatch, useAppSelector } from "../redux/hooks/redux";
@@ -30,7 +30,7 @@ const Profile = () => {
     const confirmed = confirm(DELETE_USER_TEXT);
     if (confirmed) {
       dispatch(setLoading(true));
-      await deleteAccoutFromFirebase(user.email);
+      await deleteAccountFromFirebase(user.email);
       signOut();
       dispatch(logout());
       dispatch(setLoading(false));

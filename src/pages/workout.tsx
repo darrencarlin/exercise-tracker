@@ -48,7 +48,7 @@ const Workout = () => {
   const [reps, setReps] = useState("");
   const [sets, setSets] = useState<Set[]>([]);
   const [show, setShow] = useState(false);
-  const [selected, setSelected] = useState("💪🏻");
+  const [selected, setSelected] = useState("👌🏻");
 
   const calculateNewWeight = (start: string, operator: string, end: string) => {
     switch (operator) {
@@ -211,31 +211,31 @@ const Workout = () => {
                 <EmojiSelector>
                   <button
                     onClick={() => {
-                      setSelected("👍🏻");
+                      setSelected("😎");
                       setShow(false);
                     }}
                   >
-                    👍🏻
+                    😎
                   </button>
                 </EmojiSelector>
                 <EmojiSelector>
                   <button
                     onClick={() => {
-                      setSelected("👌🏻");
+                      setSelected("💪🏻");
                       setShow(false);
                     }}
                   >
-                    👌🏻
+                    💪🏻
                   </button>
                 </EmojiSelector>
                 <EmojiSelector>
                   <button
                     onClick={() => {
-                      setSelected("👎🏻");
+                      setSelected("🥵");
                       setShow(false);
                     }}
                   >
-                    👎🏻
+                    🥵
                   </button>
                 </EmojiSelector>
               </HiddenEmojis>
