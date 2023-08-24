@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { SyntheticEvent, useCallback, useMemo, useState } from "react";
+import { SyntheticEvent, useCallback, useState } from "react";
 import { useLongPress } from "use-long-press";
 import { DELETE_EXERCISE_TEXT, LONG_PRESS_THRESHOLD } from "util/constants";
 import { deleteExerciseFromFirebase } from "util/firebase/firebase";
-import { capitalize, getTopFiveExercises } from "util/index";
+import { capitalize } from "util/index";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/redux";
 import {
   removeExercise,
@@ -13,7 +13,7 @@ import {
 } from "../../../redux/slices/app";
 import { Exercise } from "../../../types";
 import Text from "../../Text/Text";
-import { List, ListItem, ListItemNoAction, ListTitle } from "./style";
+import { List, ListItem } from "./style";
 
 interface ExerciseListProps {
   searchTerm: string;
@@ -24,7 +24,7 @@ const ExerciseList = ({ searchTerm }: ExerciseListProps) => {
   const [exerciseId, setExerciseId] = useState("");
   const { user } = useAppSelector((state) => state.app);
   const dispatch = useAppDispatch();
-  const { exercises, workouts } = useAppSelector((state) => state.app.user);
+  const { exercises } = useAppSelector((state) => state.app.user);
 
   const navigate = (exercise: Exercise) => {
     dispatch(
@@ -71,26 +71,8 @@ const ExerciseList = ({ searchTerm }: ExerciseListProps) => {
 
   const exercisesToRender = searchTerm ? filteredExercises : exercises;
 
-  const topFiveExercises = useMemo(
-    () => getTopFiveExercises(workouts),
-    [workouts]
-  );
-
   return (
     <List>
-      <ListTitle>Most Performed</ListTitle>
-      {topFiveExercises.map((exercise) => (
-        <ListItemNoAction
-          key={exercise.id}
-          onClick={() => navigate(exercise)}
-          id={exercise.id}
-        >
-          <p>{exercise.name}</p> <small>({capitalize(exercise.type)})</small>
-        </ListItemNoAction>
-      ))}
-
-      <ListTitle>All Exercises</ListTitle>
-
       {exercisesToRender.map((exercise) => (
         <ListItem
           key={exercise.id}
